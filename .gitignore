@@ -1,0 +1,19 @@
+# Terraform working directories and local state. State lives in PostgreSQL
+# (ADR 0002): a local state file here means something is misconfigured.
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+# Real inventory (addresses, host names, endpoints): never in this public
+# repository (ADR 0003). Only *.tfvars.example files are tracked.
+*.tfvars
+*.tfvars.json
+!*.tfvars.example
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+# Saved plans contain resolved values.
+*.tfplan
+tfplan

@@ -1,0 +1,26 @@
+# Single source of truth for tool versions, shared by laptops and CI
+# (jdx/mise-action reads this file and mise.lock). Every tool comes from the
+# aqua registry, which verifies release checksums, and signatures where the
+# upstream publishes them. mise.lock pins the exact artifacts per platform.
+
+[settings]
+lockfile = true
+# Supply-chain cooldown, same policy as Dependabot: ignore releases younger
+# than 7 days when resolving fuzzy versions.
+install_before = "7d"
+
+[tools]
+terraform = "1.17.1"
+tflint = "0.65.0"
+actionlint = "1.7.12"
+shellcheck = "0.11.0"
+zizmor = "1.31.1"
+pre-commit = "4.7.0"
+jq = "1.8.2"
+# mikefarah yq (scripts/check-ci-gate.sh), pinned so scripts behave the same
+# on laptops (where the Python yq may shadow it) and on runners.
+yq = "4.53.6"
+
+[tasks.lint]
+description = "Run every pre-commit hook on the whole tree"
+run = "pre-commit run --all-files --show-diff-on-failure"
